@@ -53,13 +53,17 @@ app.get('/api/timestamp/:datValue?',function(req,res){  //":---?" at the end ver
       var unixd = datVal.getTime();
       var utcd= datVal.toUTCString();
     }
-    res.json({unix : unixd, utc : utcd });
+    if( unixd && utcd )
+      res.json({unix : unixd, utc : utcd });
+    else
+    res.json( {error : "Invalid Date" } );
+     
     
 });
 
 
 
 // listen for requests :)  process.env.PORT  CHANGE afterwards
-var listener = app.listen(3000 || process.env.PORT, function () {
+var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
