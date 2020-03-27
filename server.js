@@ -61,6 +61,9 @@ app.get('/api/timestamp/:datValue?',function(req,res){  //":---?" at the end ver
     
 });
 
+app.get("/*", function (req, res) {
+  res.sendFile(__dirname + '/views/404.html');
+});
 
 
 // listen for requests :)  process.env.PORT  CHANGE afterwards
