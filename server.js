@@ -28,7 +28,7 @@ app.get("/api/hello", function (req, res) {
 
 // default route 
 
-app.get('/dateValues/:datValue',function(req,res){  //":---?" at the end very important 
+app.get('/api/timestamp/:datValue?',function(req,res){  //":---?" at the end very important 
      
     if(!req.params || !req.params.datValue)
     {
