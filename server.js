@@ -4,6 +4,8 @@
 // init project
 var express = require('express');
 var app = express();
+var bodyParser= require('body-parser')
+app.use(bodyParser.json()); 
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -24,9 +26,40 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// default route 
+
+app.get('/dateValues/:datValue',function(req,res){  //":---?" at the end very important 
+     
+    if(!req.params || !req.params.datValue)
+    {
+      res.json({unix : new Date().getTime(), utc : new Date().toUTCString() });
+    }
+
+    let d= req.params.datValue
+    var datVal;
+
+    datVal= new Date(d);
+    if(!datVal){
+      res.json( {error : "Invalid Date" } );
+    }
+    else if(!isNaN(d)){
+      var unixd = d;
+      d=parseInt(d);
+      datVal= new Date(d);
+
+      var utcd= datVal.toUTCString();
+    }
+    else {
+      var unixd = datVal.getTime();
+      var utcd= datVal.toUTCString();
+    }
+    res.json({unix : unixd, utc : utcd });
+    
+});
 
 
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+
+// listen for requests :)  process.env.PORT  CHANGE afterwards
+var listener = app.listen(3000 || process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
